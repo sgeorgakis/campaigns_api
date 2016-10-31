@@ -1,2 +1,2 @@
 createsend==4.2.0
-jinja2==2.8.0
+Flask==0.11.1

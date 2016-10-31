@@ -35,17 +35,17 @@ class ServiceManager:
                     return client.ClientID
             raise NoClientFound('No Client with this name was found')
         except Unauthorized:
-            print (
+            raise WrongAPI(
                 'Unauthorized Error. Check the API Key: {0}'
                 .format(self.__api_key)
                 )
-            exit(-1)
+            # exit(-1)
         except NoClientFound:
-            print (
+            raise NoClientFound(
                 'No client with this name was found. Check the name Key: {0}'
                 .format(client_name)
                 )
-            exit(-1)
+            # exit(-1)
 
     def __get_list_id(self, list_name):
         """
@@ -64,11 +64,11 @@ class ServiceManager:
                     return campaign_list.ListID
             raise NoListFound('No list with this name was found')
         except NoListFound:
-            print (
+            raise NoListFound(
                 'No list found with this name. Check the list name: {0}'
                 .format(list_name)
                 )
-            exit(-1)
+            # exit(-1)
 
     def get_list(self, list_name):
         """
@@ -91,14 +91,10 @@ class ServiceManager:
          of all the active subscribers in the list
          in a dictionary.
         """
-        subscribers = []
+        subscribers = {}
         results = campaign_list.active().Results
         for i in range(len(results)):
-            subscriber = {
-                'name': results[i].Name,
-                'e-mail': results[i].EmailAddress
-                }
-            subscribers.append(subscriber)
+            subscribers[results[i].Name] = results[i].EmailAddress
         return subscribers
 
     def add_subscriber(self, list_name, email, name=None):
@@ -115,11 +111,11 @@ class ServiceManager:
                 email, name, [], True
                 )
         except BadRequest:
-            print 'Bad Request. Please check your parameters.'
+            raise BadRequest('Bad Request. Please check your parameters.')
         except ClientError:
-            print 'Client error.'
+            raise ClientError('Client error.')
         except ServerError:
-            print 'Server error.'
+            raise ClientError('Server error.')
 
     def delete_subscriber(self, list_name, email):
         """
@@ -136,13 +132,13 @@ class ServiceManager:
                 )
             subscriber.delete()
         except BadRequest:
-            print 'Bad Request. Please check your parameters.'
+            raise BadRequest('Bad Request. Please check your parameters.')
         except ClientError:
-            print 'Client error.'
+            raise ClientError('Client error.')
         except ServerError:
-            print 'Server error.'
+            raise ClientError('Server error.')
         except NotFound:
-            print (
+            raise NotFound(
                 'Subscriber not found. Please check the email address: {0}'
                 .format(email)
                 )
@@ -150,11 +146,11 @@ class ServiceManager:
 if __name__ == "__main__":
     service_manager = ServiceManager(API_key, client_default_name)
     l = service_manager.get_list(name)
-    # service_manager.add_subscriber(name, 'Steve', 's_georgakis@yahoo.com')
-    service_manager.delete_subscriber(name, "s_georgakis@yahoo.com")
+    #service_manager.delete_subscriber(name, "s_georgakis@yahoo.com")
     subscribers = service_manager.get_active_subscribers(l)
-    for i in range(len(subscribers)):
-        print 'name: {0}, e-mail: {1}'.format(
-            subscribers[i]['name'],
-            subscribers[i]['e-mail']
-            )
+    #for i in range(len(subscribers)):
+    #    print 'name: {0}, e-mail: {1}'.format(
+    #        subscribers[i]['name'],
+    #        subscribers[i]['e-mail']
+    #        )
+    print subscribers
