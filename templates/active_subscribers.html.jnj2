@@ -9,9 +9,40 @@
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
+<link href="../static/css/index.css" rel="stylesheet">
 <script src="../static/js/jQuery.js"></script>
 <script src="../static/js/jQueryRedirect.js"></script>
-<script src="../static/js/scripts.js"></script>
+<script>
+  $(function() {
+      $('#btnSubmitSubscriber').click(function() {
+         $.ajax({
+          url: '/add_subscriber/',
+          type: 'PUT',
+          data: {"inputName": $("#inputName").val(),
+               "inputMail": $("#inputMail").val()
+              },
+          success: function(){    
+                    location.reload();   
+                  }
+          });
+    });
+  });
+
+  $(function() {
+      $('.w3-right').click(function() {
+        var email = this.id;
+         $.ajax({
+          url: '/delete_subscriber/' + email,
+          type: 'DELETE',
+          data: {"email": email
+              },
+          success: function(){    
+                    location.reload();   
+                  }
+          });
+    });
+  });
+</script>
 </head>
 <body class="w3-light-grey">
   <div class="w3-container">
@@ -19,9 +50,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <ul class="w3-ul w3-card-4 w3-white">
       {% for name, email in subscribers.items() %}
         <li class="w3-padding-16">
-          <button id="{{ email }}" type="button">Delete</button>
           <span class="w3-left">{{ name }}</span>
-          <span id="{{ email }}" class="w3-right">{{ email }}</span><br>
+          <span id="{{ email }}" class="w3-center" style="padding-left:5em">{{ email }}</span>
+          <button id="{{ email }}" type="button" class="w3-right">Delete</button>
         </li>
       {% endfor %}
     </ul>
@@ -29,7 +60,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <div class="w3-container">
     <h5>Add subscriber</h5>
-      <form class="form-submit">
+      <form">
         <label for="inputName" class="sr-only">Name</label>
         <input type="text" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>
         <label for="inputMail" class="sr-only">E-mail</label>

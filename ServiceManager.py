@@ -39,13 +39,11 @@ class ServiceManager:
                 'Unauthorized Error. Check the API Key: {0}'
                 .format(self.__api_key)
                 )
-            # exit(-1)
         except NoClientFound:
             raise NoClientFound(
                 'No client with this name was found. Check the name Key: {0}'
                 .format(client_name)
                 )
-            # exit(-1)
 
     def __get_list_id(self, list_name):
         """
@@ -68,7 +66,6 @@ class ServiceManager:
                 'No list found with this name. Check the list name: {0}'
                 .format(list_name)
                 )
-            # exit(-1)
 
     def get_list(self, list_name):
         """
@@ -146,11 +143,11 @@ class ServiceManager:
 if __name__ == "__main__":
     service_manager = ServiceManager(API_key, client_default_name)
     l = service_manager.get_list(name)
-    #service_manager.delete_subscriber(name, "s_georgakis@yahoo.com")
+#    service_manager.delete_subscriber(name, "s_georgakis@yahoo.com")
     subscribers = service_manager.get_active_subscribers(l)
-    #for i in range(len(subscribers)):
-    #    print 'name: {0}, e-mail: {1}'.format(
-    #        subscribers[i]['name'],
-    #        subscribers[i]['e-mail']
-    #        )
+#    for i in range(len(subscribers)):
+#        print 'name: {0}, e-mail: {1}'.format(
+#            subscribers[i]['name'],
+#            subscribers[i]['e-mail']
+#            )
     print subscribers
