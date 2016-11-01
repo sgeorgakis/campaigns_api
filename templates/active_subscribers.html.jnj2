@@ -9,7 +9,7 @@
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
-<link href="../static/css/index.css" rel="stylesheet">
+<link href="../static/css/styles.css" rel="stylesheet">
 <script src="../static/js/jQuery.js"></script>
 <script src="../static/js/jQueryRedirect.js"></script>
 <script>

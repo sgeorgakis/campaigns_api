@@ -36,7 +36,6 @@ def interact():
 @app.route("/delete_subscriber/<email>", methods=['DELETE'])
 def delete_subscriber(email):
     _email = email
-    print _email
     service_manager.delete_subscriber(_list, _email)
     return json.dumps({'html': '<span>User Deleted</span>'})
 
